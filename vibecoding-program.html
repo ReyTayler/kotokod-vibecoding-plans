@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ru" class="no-js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F6F7FC">
+<title>Вайбкодинг — программа курса | Котокод</title>
+<meta name="description" content="Программа курса «Вайбкодинг» для детей 11–16 лет: 36 уроков, 6 модулей, проекты на Python, HTML/CSS/JS и нейросетях, доступных в России.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#4F5BFF;--blue-deep:#3B45E0;--blue-bg:#EEF0FF;--blue-pale:#F5F6FF;
+  --cyan:#45D2F2;--cyan-bg:#E4F8FD;
+  --dark:#171D4D;--ink:#1B1F3B;--text:#30323D;--muted:#68708A;
+  --line:rgba(23,29,77,.09);--bg:#F6F7FC;--white:#fff;
+  --ok:#1FAF6B;--warn:#E8A317;
+  --shadow-xs:0 6px 18px rgba(23,29,77,.06);--shadow-sm:0 12px 34px rgba(23,29,77,.08);
+  --shadow-md:0 24px 64px rgba(23,29,77,.12);--shadow-lg:0 40px 110px rgba(23,29,77,.16);
+  --r-sm:14px;--r-md:20px;--r-lg:28px;--r-xl:36px;
+  --wrap:1180px;--ease:cubic-bezier(.2,.8,.2,1);
+  --display:"Inter Tight","Inter","Segoe UI",sans-serif;--sans:"Inter",-apple-system,"Segoe UI",Arial,sans-serif;
+  --mono:"JetBrains Mono",Consolas,monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:100px}
+body{margin:0;min-width:320px;color:var(--text);font:400 16px/1.6 var(--sans);overflow-x:clip;-webkit-font-smoothing:antialiased;
+  background:radial-gradient(circle at 10% 6%,rgba(79,91,255,.09),transparent 26rem),radial-gradient(circle at 92% 16%,rgba(69,210,242,.12),transparent 24rem),var(--bg)}
+::selection{background:var(--cyan);color:var(--dark)}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3,h4{font-family:var(--display);color:var(--dark);text-wrap:balance}
+h1{font-size:clamp(2.4rem,4.6vw,4.1rem);font-weight:800;letter-spacing:-.045em;line-height:1.02}
+h2{font-size:clamp(1.9rem,3.4vw,3.1rem);font-weight:800;letter-spacing:-.038em;line-height:1.05}
+h3{font-size:clamp(1.2rem,1.8vw,1.45rem);font-weight:700;letter-spacing:-.02em;line-height:1.2}
+p{text-wrap:pretty}
+a{color:inherit}
+svg{display:block}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:8px}
+
+.progress{position:fixed;z-index:1000;inset:0 auto auto 0;width:100%;height:3px;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.wrap{width:min(100%,var(--wrap));margin-inline:auto;padding-inline:clamp(16px,4vw,42px)}
+.section{position:relative;padding-block:clamp(70px,9vw,120px)}
+.section-head{display:grid;gap:18px;max-width:800px}
+.lead{max-width:700px;color:var(--muted);font-size:clamp(1rem,1.3vw,1.12rem);line-height:1.7}
+.eyebrow{display:inline-flex;align-items:center;width:fit-content;min-height:36px;padding:6px 15px;color:var(--dark);background:var(--cyan);border-radius:12px;
+  box-shadow:0 9px 22px rgba(23,29,77,.1);font:800 .92rem/1 var(--display);transform:rotate(-2deg)}
+.eyebrow--blue{color:#fff;background:var(--blue)}
+.eyebrow--dark{color:var(--cyan);background:var(--dark)}
+.eyebrow--white{color:var(--blue);background:#fff}
+
+/* header */
+.site-header{position:sticky;z-index:50;top:0;padding-top:12px;pointer-events:none}
+.nav{display:flex;align-items:center;gap:18px;min-height:62px;padding:8px 10px 8px 16px;background:rgba(255,255,255,.84);border:1px solid rgba(255,255,255,.95);
+  border-radius:20px;box-shadow:var(--shadow-sm);backdrop-filter:blur(18px) saturate(1.2);pointer-events:auto}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex:0 0 auto}
+.brand svg{height:26px;width:auto}
+.brand small{padding:6px 10px;color:var(--blue);background:var(--blue-bg);border-radius:999px;font:700 .68rem/1 var(--mono);letter-spacing:.04em;text-transform:uppercase}
+.site-nav{display:flex;gap:2px;margin-left:auto;min-width:0}
+.site-nav a{display:inline-flex;align-items:center;min-height:40px;padding:0 12px;color:#4C4F66;border-radius:12px;font-size:.8rem;font-weight:600;text-decoration:none;white-space:nowrap;transition:.18s var(--ease)}
+.site-nav a:hover,.site-nav a.is-active{color:var(--blue);background:var(--blue-bg)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 20px;color:#fff;background:var(--dark);border:0;border-radius:15px;
+  box-shadow:0 14px 30px rgba(23,29,77,.18);font:700 .92rem/1 var(--sans);text-decoration:none;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 36px rgba(23,29,77,.24)}
+.btn svg{width:18px;height:18px}
+.btn--quiet{color:var(--blue);background:var(--blue-bg);box-shadow:none}
+.btn--quiet:hover{box-shadow:none;background:#E2E5FF}
+
+/* hero */
+.hero{padding-top:clamp(28px,5vw,64px);padding-bottom:clamp(60px,8vw,100px)}
+.hero-card{position:relative;isolation:isolate;overflow:hidden;padding:clamp(26px,4vw,52px);background:rgba(255,255,255,.94);border-radius:var(--r-xl);box-shadow:var(--shadow-lg)}
+.hero-card::before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(130deg,rgba(238,240,255,.7),transparent 42%),linear-gradient(310deg,rgba(228,248,253,.8),transparent 40%)}
+.hero-card::after{content:"";position:absolute;z-index:-1;top:-220px;right:-170px;width:560px;height:560px;border:2px solid rgba(79,91,255,.12);border-radius:50%}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(300px,.7fr);gap:clamp(30px,5vw,64px);align-items:center}
+.hero h1{margin-top:22px}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero .lead{margin-top:22px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:34px 0 0}
+.stat{padding:14px;background:rgba(255,255,255,.8);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-xs)}
+.stat dt{color:var(--muted);font:600 .64rem/1.35 var(--mono);letter-spacing:.04em;text-transform:uppercase}
+.stat dd{margin:6px 0 0;color:var(--dark);font:800 1.5rem/1 var(--display);letter-spacing:-.03em}
+
+.chat{position:relative;padding:18px;background:var(--dark);border-radius:30px;box-shadow:0 34px 80px rgba(23,29,77,.32);transform:rotate(1.5deg);color:#fff}
+.chat::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(circle at 85% 10%,rgba(69,210,242,.22),transparent 35%),radial-gradient(circle at 10% 90%,rgba(79,91,255,.35),transparent 40%)}
+.chat-top{position:relative;display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.dots{display:flex;gap:5px}.dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2)}
+.chat-top span{color:rgba(255,255,255,.5);font:600 .62rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.msgs{position:relative;display:grid;gap:10px;margin-top:16px}
+.msg{max-width:88%;padding:10px 13px;border-radius:14px;font-size:.8rem;line-height:1.45}
+.msg--me{justify-self:end;background:var(--blue);border-bottom-right-radius:4px}
+.msg--ai{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-bottom-left-radius:4px}
+.msg--ai code{display:block;margin-top:8px;padding:8px 10px;color:var(--cyan);background:rgba(0,0,0,.25);border-radius:9px;font:500 .66rem/1.55 var(--mono);white-space:pre}
+.game{position:relative;height:108px;margin-top:4px;overflow:hidden;background:linear-gradient(180deg,#26307A,#1D2560);border-radius:14px;border:1px solid rgba(255,255,255,.08)}
+.game .score{position:absolute;top:8px;left:10px;font:700 .64rem/1 var(--mono);color:var(--cyan)}
+.fish{position:absolute;top:-20px;width:24px;height:15px;animation:fall 2.6s linear infinite}
+.game .score{display:flex;align-items:center;gap:4px}.hrt{width:9px;height:9px}
+.fish:nth-of-type(1){left:82%}.fish:nth-of-type(2){left:30%;animation-delay:.9s}.fish:nth-of-type(3){left:62%;animation-delay:1.7s}
+.cat{position:absolute;bottom:4px;width:40px;height:37px;animation:walk 4s ease-in-out infinite alternate}
+@keyframes fall{to{transform:translateY(140px)}}
+@keyframes walk{from{left:8%}to{left:74%}}
+.chip-float{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:9px 12px;color:var(--dark);background:#fff;border-radius:13px;box-shadow:var(--shadow-sm);font:700 .66rem/1 var(--mono);white-space:nowrap}
+.chip-float::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.chip-float--a{top:-16px;left:-10px;transform:rotate(-4deg)}
+.chip-float--b{bottom:-14px;right:-6px;transform:rotate(4deg)}
+.hero-visual{position:relative;padding:14px 8px}
+
+/* vibe loop */
+.loop{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:44px;padding:0;list-style:none;counter-reset:s}
+.loop li{position:relative;padding:22px 18px 20px;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--shadow-xs)}
+.loop li:not(:last-child)::after{content:"";position:absolute;z-index:2;top:40px;right:-13px;width:14px;height:14px;background:var(--bg);border-top:2px solid var(--blue);border-right:2px solid var(--blue);transform:rotate(45deg) scale(.7)}
+.loop-num{display:grid;place-items:center;width:44px;height:44px;color:#fff;background:var(--blue);border-radius:14px;font:800 1rem/1 var(--display)}
+.loop li:nth-child(even) .loop-num{color:var(--dark);background:var(--cyan)}
+.loop h3{margin-top:16px;font-size:1.08rem}
+.loop p{margin-top:8px;color:var(--muted);font-size:.86rem;line-height:1.55}
+.loop-note{display:flex;gap:14px;align-items:center;margin-top:18px;padding:18px 22px;background:var(--dark);border-radius:var(--r-md);color:rgba(255,255,255,.78);font-size:.95rem}
+.loop-note b{color:#fff}
+.loop-note .ic{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--cyan);color:var(--dark)}
+.loop-note .ic svg{width:22px;height:22px}
+
+/* lines */
+.lines-section{background:#fff}
+.lines{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:44px}
+.line-card{display:flex;flex-direction:column;gap:12px;padding:24px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r-lg)}
+.line-card:nth-child(1){background:var(--blue-bg)}
+.line-card:nth-child(4){background:var(--cyan-bg)}
+.line-ic{display:grid;place-items:center;width:48px;height:48px;color:var(--blue);background:#fff;border-radius:15px;box-shadow:var(--shadow-xs)}
+.line-ic svg{width:25px;height:25px}
+.line-card h3{font-size:1.15rem}
+.line-card p{color:var(--muted);font-size:.9rem;line-height:1.6}
+
+/* program */
+.tabs{display:flex;gap:8px;margin-top:40px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;display:flex;align-items:center;gap:10px;min-height:56px;padding:8px 16px 8px 8px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:16px;
+  font:700 .85rem/1.15 var(--sans);text-align:left;cursor:pointer;transition:.2s var(--ease)}
+.tab .tn{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;color:#fff;background:var(--mc);font:800 .9rem/1 var(--display)}
+.tab small{display:block;color:var(--muted);font:600 .64rem/1.2 var(--mono);text-transform:uppercase;letter-spacing:.04em}
+.tab:hover{box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.tab[aria-selected="true"]{color:#fff;background:var(--dark);border-color:var(--dark);box-shadow:var(--shadow-md)}
+.tab[aria-selected="true"] small{color:rgba(255,255,255,.55)}
+
+.module{margin-top:14px;animation:fade .35s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.module-top{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(22px,4vw,48px);padding:clamp(24px,4vw,44px);
+  background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--shadow-md)}
+.module-top::before{content:"";position:absolute;top:-130px;right:-100px;width:300px;height:300px;border:44px solid color-mix(in srgb,var(--mc) 10%,transparent);border-radius:50%;pointer-events:none}
+.m-badge{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font:700 .72rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.m-badge b{display:grid;place-items:center;width:52px;height:52px;color:#fff;background:var(--mc);border-radius:16px;font:800 1.4rem/1 var(--display);transform:rotate(-4deg);box-shadow:0 12px 24px color-mix(in srgb,var(--mc) 30%,transparent)}
+.module-top h3{margin-top:18px;font-size:clamp(1.6rem,2.8vw,2.3rem);letter-spacing:-.035em}
+.m-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.pill{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;font:600 .72rem/1 var(--mono)}
+.label{display:block;margin:22px 0 8px;color:var(--muted);font:700 .68rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.m-goal{color:var(--ink);font-size:1.02rem;line-height:1.65}
+.results{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.results li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;align-items:start;padding:10px 12px 10px 10px;background:var(--bg);border-radius:12px;font-size:.9rem;line-height:1.5}
+.ck{display:grid;place-items:center;width:26px;height:26px;color:#fff;background:var(--ok);border-radius:50%}
+.ck svg{width:14px;height:14px}
+.m-project{position:relative;display:flex;flex-direction:column;padding:24px;color:rgba(255,255,255,.75);background:var(--dark);border-radius:var(--r-lg)}
+.m-project .label{margin-top:0;color:var(--cyan)}
+.m-project h4{color:#fff;font-size:1.3rem;line-height:1.2;letter-spacing:-.02em}
+.m-project p{margin-top:10px;font-size:.9rem;line-height:1.6}
+.m-project .stack{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:18px}
+.m-project .stack span{padding:6px 9px;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:8px;font:600 .66rem/1 var(--mono)}
+.m-side{display:flex;flex-direction:column;gap:14px}
+
+.lessons-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:34px 0 14px;flex-wrap:wrap}
+.lessons-bar h4{font-size:1.25rem}
+.lessons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+.lesson{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);transition:box-shadow .2s var(--ease),border-color .2s var(--ease)}
+.lesson[open]{border-color:color-mix(in srgb,var(--mc) 35%,transparent);box-shadow:var(--shadow-sm)}
+.lesson summary{display:grid;grid-template-columns:48px minmax(0,1fr) 32px;gap:14px;align-items:center;padding:14px 16px;cursor:pointer;list-style:none}
+.lesson summary::-webkit-details-marker{display:none}
+.l-num{display:grid;place-items:center;width:48px;height:48px;color:var(--mc);background:color-mix(in srgb,var(--mc) 12%,#fff);border-radius:14px;font:800 1.05rem/1 var(--display)}
+.lesson[open] .l-num{color:#fff;background:var(--mc)}
+.l-title{display:block;color:var(--dark);font:700 1rem/1.25 var(--display)}
+.l-proj{display:block;margin-top:4px;color:var(--muted);font-size:.8rem;line-height:1.4}
+.plus{position:relative;display:grid;place-items:center;width:32px;height:32px;color:var(--blue);background:var(--blue-bg);border-radius:50%}
+.plus::before,.plus::after{content:"";position:absolute;width:12px;height:2px;background:currentColor;border-radius:2px;transition:transform .2s var(--ease)}
+.plus::after{transform:rotate(90deg)}
+.lesson[open] .plus::after{transform:rotate(0)}
+.l-body{display:grid;gap:14px;padding:0 18px 18px}
+.l-body .label{margin:0 0 8px}
+.topics{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.topics li{padding:7px 10px;color:var(--ink);background:var(--bg);border-radius:9px;font-size:.8rem;line-height:1.35}
+.outcome{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.outcome li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;font-size:.86rem;line-height:1.5}
+.outcome li::before{content:"";width:8px;height:8px;margin:7px 0 0 5px;border-radius:50%;background:var(--ok)}
+.wow{display:flex;gap:10px;align-items:center;padding:10px 12px;color:#6B4A00;background:#FFF5DC;border-radius:12px;font-size:.84rem;font-weight:600;line-height:1.45}
+.wow svg{flex:0 0 auto;width:18px;height:18px}
+
+/* matrix */
+.matrix-wrap{margin-top:40px;overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.matrix{width:100%;min-width:760px;border-collapse:collapse}
+.matrix th,.matrix td{padding:14px 12px;border-bottom:1px solid var(--line);text-align:center;font-size:.86rem}
+.matrix tr:last-child td{border-bottom:0}
+.matrix thead th{color:var(--muted);background:var(--blue-pale);font:700 .66rem/1.3 var(--mono);letter-spacing:.05em;text-transform:uppercase}
+.matrix th:first-child,.matrix td:first-child{text-align:left;padding-left:22px}
+.matrix td:first-child{color:var(--dark);font-weight:700}
+.lv{display:inline-flex;gap:3px}
+.lv i{width:10px;height:10px;border-radius:3px;background:#E6E8F2}
+.lv i.on{background:var(--blue)}
+.lv.l3 i.on{background:var(--ok)}
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px;color:var(--muted);font-size:.82rem}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+
+.final{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}
+.final div{padding:22px;background:#fff;border:1px solid var(--line);border-radius:var(--r-md)}
+.final b{display:block;color:var(--dark);font:700 1.02rem/1.3 var(--display)}
+.final p{margin-top:8px;color:var(--muted);font-size:.88rem;line-height:1.55}
+
+/* lesson format */
+.format-section{background:#fff}
+.timeline{display:flex;gap:6px;margin-top:44px}
+.seg{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:150px;padding:14px;border-radius:16px;background:var(--bg);overflow:hidden}
+.seg b{color:var(--dark);font:700 .9rem/1.25 var(--display)}
+.seg small{color:var(--muted);font:600 .66rem/1 var(--mono)}
+.seg p{margin-top:6px;color:var(--muted);font-size:.76rem;line-height:1.4}
+.seg--accent{background:var(--blue);}
+.seg--accent b,.seg--accent small,.seg--accent p{color:#fff}
+.seg--accent small,.seg--accent p{opacity:.8}
+.seg--cyan{background:var(--cyan-bg)}
+.seg--dark{background:var(--dark)}
+.seg--dark b{color:#fff}.seg--dark small,.seg--dark p{color:rgba(255,255,255,.65)}
+
+/* tools */
+.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:44px}
+.tool{display:flex;flex-direction:column;gap:10px;padding:22px;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg)}
+.tool-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tool-logos{display:flex;gap:8px}
+.tool-logo{display:grid;place-items:center;width:48px;height:48px;background:var(--bg);border:1px solid var(--line);border-radius:14px}
+.tool-logo svg{width:28px;height:28px}
+.ru{padding:6px 9px;color:#14734A;background:#E3F7EC;border-radius:8px;font:700 .64rem/1 var(--mono);white-space:nowrap}
+.tool h3{font-size:1.1rem}
+.tool p{color:var(--muted);font-size:.88rem;line-height:1.55}
+.tool .where{margin-top:auto;padding-top:6px;color:var(--ink);font:600 .7rem/1.4 var(--mono)}
+.notice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:22px}
+.notice div{padding:24px;border-radius:var(--r-lg);background:var(--dark);color:rgba(255,255,255,.72);font-size:.9rem;line-height:1.6}
+.notice div:last-child{background:#FFF5DC;color:#5E4300}
+.notice b{display:block;margin-bottom:8px;color:#fff;font:700 1.08rem/1.3 var(--display)}
+.notice div:last-child b{color:#3D2B00}
+
+/* mini-courses */
+.mc-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:44px}
+.mc-card{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:10px;padding:22px;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:var(--r-lg);
+  font:inherit;text-align:left;cursor:pointer;transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease)}
+.mc-card::after{content:"";position:absolute;right:-50px;bottom:-60px;width:150px;height:150px;border-radius:50%;background:color-mix(in srgb,var(--mc) 12%,transparent);transition:transform .35s var(--ease)}
+.mc-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+.mc-card:hover::after{transform:scale(1.15)}
+.mc-card[aria-selected="true"]{border-color:var(--mc);box-shadow:var(--shadow-md)}
+.mc-ic{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;color:#fff;background:var(--mc);font-size:1.5rem;transform:rotate(-4deg)}
+.mc-ic svg{width:30px;height:30px}.mc-ic--bare{background:none;transform:none}.mc-ic--bare svg{width:52px;height:52px}
+.mc-card small{color:var(--muted);font:700 .66rem/1 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.mc-card b{color:var(--dark);font:800 1.25rem/1.2 var(--display);letter-spacing:-.02em}
+.mc-card span.desc{color:var(--muted);font-size:.88rem;line-height:1.5}
+.mc-tags{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+.mc-panel{margin-top:14px;animation:fade .35s var(--ease)}
+.mc-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,4vw,44px);padding:clamp(24px,4vw,40px);background:var(--dark);border-radius:var(--r-xl);color:rgba(255,255,255,.76)}
+.mc-top h3{color:#fff;font-size:clamp(1.5rem,2.6vw,2.1rem);letter-spacing:-.03em}
+.mc-top .label{color:var(--cyan)}
+.mc-top p{font-size:.96rem;line-height:1.65}
+.mc-top .results li{background:rgba(255,255,255,.07);color:#fff}
+.mc-note{margin-top:16px;padding:12px 14px;border-radius:12px;background:rgba(69,210,242,.12);color:#CFF3FC;font-size:.84rem;line-height:1.5}
+.mc-lessons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0 0;padding:0;list-style:none}
+.mc-lesson{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;padding:16px;background:#fff;border:1px solid var(--line);border-radius:var(--r-md)}
+.mc-n{position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:13px;color:var(--mc);background:color-mix(in srgb,var(--mc) 12%,#fff);font:800 1rem/1 var(--display)}
+.mc-lesson h4{font-size:1rem;line-height:1.25}
+.mc-lesson p{margin-top:5px;color:var(--muted);font-size:.84rem;line-height:1.5}
+.mc-task svg{flex:0 0 auto;width:16px;height:16px;margin-top:1px}
+.mc-task{display:flex;gap:8px;margin-top:10px;padding:8px 10px;color:#6B4A00;background:#FFF5DC;border-radius:10px;font-size:.8rem;font-weight:600;line-height:1.4}
+.mc-play{display:inline-flex;align-items:center;gap:6px;margin-top:8px;color:var(--muted);font:600 .66rem/1 var(--mono)}
+.mc-play::before{content:"";width:0;height:0;border-left:7px solid var(--mc);border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
+@media (max-width:900px){.mc-picker,.mc-top,.mc-lessons{grid-template-columns:1fr}}
+
+/* cta */
+.cta{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px;align-items:center;padding:clamp(30px,5vw,56px);background:var(--blue);border-radius:var(--r-xl);box-shadow:var(--shadow-lg);color:#fff}
+.cta::before{content:"";position:absolute;right:-90px;bottom:-120px;width:320px;height:320px;border-radius:50%;background:var(--cyan);opacity:.9}
+.cta::after{content:"";position:absolute;left:-120px;top:-160px;width:360px;height:360px;border:48px solid rgba(255,255,255,.1);border-radius:50%}
+.cta>*{position:relative;z-index:1}
+.cta h2{color:#fff;margin-top:18px}
+.cta p{max-width:620px;margin-top:14px;color:rgba(255,255,255,.82)}
+.big36{display:grid;place-items:center;width:170px;height:170px;color:var(--dark);background:#fff;border-radius:44px;font:800 6rem/1 var(--display);letter-spacing:-.08em;transform:rotate(-4deg);box-shadow:0 28px 60px rgba(23,29,77,.25)}
+
+footer{margin-top:clamp(60px,8vw,110px);background:var(--dark);color:rgba(255,255,255,.6)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding-block:34px;font-size:.8rem}
+.foot strong{display:block;color:#fff;font:700 1rem/1.3 var(--display)}
+
+.to-top{position:fixed;z-index:40;right:18px;bottom:20px;display:grid;place-items:center;width:48px;height:48px;color:#fff;background:var(--dark);border:0;border-radius:15px;box-shadow:var(--shadow-md);
+  cursor:pointer;opacity:0;pointer-events:none;transform:translateY(12px);transition:.2s var(--ease)}
+.to-top.on{opacity:1;pointer-events:auto;transform:none}
+.to-top svg{width:20px;height:20px}
+
+.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.js .reveal.in{opacity:1;transform:none}
+
+@media (max-width:1080px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-visual{max-width:440px}
+  .loop{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .loop li::after{display:none}
+  .lines{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tools{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .timeline{flex-wrap:wrap}
+  .timeline .seg{flex:1 1 30% !important}
+}
+@media (max-width:900px){
+  .site-nav{overflow-x:auto;scrollbar-width:none}
+  .site-nav::-webkit-scrollbar{display:none}
+  .brand small{display:none}
+  .module-top{grid-template-columns:1fr}
+  .lessons{grid-template-columns:1fr}
+  .notice,.final{grid-template-columns:1fr}
+  .cta{grid-template-columns:1fr}
+  .big36{width:120px;height:120px;font-size:4rem;border-radius:32px}
+}
+@media (max-width:640px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .loop,.lines,.tools{grid-template-columns:1fr}
+  .timeline .seg{flex:1 1 100% !important;min-height:auto;gap:8px}
+  .nav{gap:10px;padding-left:12px}
+  .brand svg{height:20px}
+  .lesson summary{grid-template-columns:40px minmax(0,1fr) 28px;gap:10px;padding:12px}
+  .l-num{width:40px;height:40px;font-size:.95rem}
+  .chip-float{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="nav">
+      <a class="brand" href="#top" aria-label="Котокод — наверх">
+        <svg viewBox="0 0 411 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M99.7005 15.8495H52.1464L36.2969 0V72.7291C36.2983 74.4589 36.9862 76.1175 38.2093 77.3407C39.4325 78.5638 41.091 79.2516 42.8209 79.2531H109.02C110.751 79.2531 112.411 78.5659 113.636 77.3426C114.86 76.1193 115.549 74.4599 115.55 72.7291V0L99.7005 15.8495Z" fill="#45D2F2"/><path d="M150.468 32.415H161.058L149.802 45.3187L161.058 58.2335H150.468L142.64 49.2686H136.038V58.2335H127.439V32.415H136.038V41.3466H142.64L150.468 32.415Z" fill="#4F5BFF"/><path d="M194.787 45.3189C194.787 53.0856 190.138 58.9383 177.478 58.9383C164.819 58.9383 160.17 53.0689 160.17 45.3189C160.17 37.5689 164.824 31.6995 177.478 31.6995C190.133 31.6995 194.787 37.5301 194.787 45.3189ZM186.188 45.3189C186.188 42.1068 184.491 39.971 177.478 39.971C170.466 39.971 168.769 42.1068 168.769 45.3189C168.769 48.531 170.466 50.6335 177.478 50.6335C184.491 50.6335 186.188 48.5032 186.188 45.3189Z" fill="#4F5BFF"/><path d="M196.068 40.6698V32.415H227.69V40.6809H216.195V58.2446H207.596V40.6698H196.068Z" fill="#4F5BFF"/><path d="M263.578 45.3189C263.578 53.0856 258.929 58.9383 246.275 58.9383C233.621 58.9383 228.967 53.0689 228.967 45.3189C228.967 37.5689 233.616 31.6995 246.275 31.6995C258.935 31.6995 263.578 37.5301 263.578 45.3189ZM254.985 45.3189C254.985 42.1068 253.288 39.971 246.275 39.971C239.263 39.971 237.566 42.1068 237.566 45.3189C237.566 48.531 239.263 50.6335 246.275 50.6335C253.288 50.6335 254.985 48.5032 254.985 45.3189Z" fill="#4F5BFF"/><path d="M290.261 32.415H300.856L289.6 45.3187L300.856 58.2335H290.261L282.438 49.2686H275.831V58.2335H267.232V32.415H275.831V41.3466H282.438L290.261 32.415Z" fill="#4F5BFF"/><path d="M334.588 45.3189C334.588 53.0856 329.939 58.9383 317.279 58.9383C304.62 58.9383 299.971 53.0689 299.971 45.3189C299.971 37.5689 304.62 31.6995 317.279 31.6995C329.939 31.6995 334.588 37.5301 334.588 45.3189ZM325.989 45.3189C325.989 42.1068 324.291 39.971 317.279 39.971C310.267 39.971 308.569 42.1068 308.569 45.3189C308.569 48.531 310.267 50.6335 317.279 50.6335C324.291 50.6335 325.989 48.5032 325.989 45.3189Z" fill="#4F5BFF"/><path d="M335.73 50.3005H339.126C340.398 47.9731 341.035 45.3519 340.973 42.7002V32.415H371.013V50.3116H374.702V63.415H366.07V58.2446H344.329V63.415H335.73V50.3005ZM362.359 50.3005V40.3758H349.599V42.7002C349.674 45.3081 349.182 47.9011 348.157 50.3005H362.359Z" fill="#4F5BFF"/><path d="M386.59 39.9764V32.415L410.999 42.911V53.6179L386.59 64.114V56.5304L403.077 48.2534L386.59 39.9764Z" fill="#4F5BFF"/><path d="M24.4095 56.5304V64.1029L0 53.6068V42.9L24.4095 32.415V39.9875L7.92753 48.2534L24.4095 56.5304Z" fill="#4F5BFF"/></svg>
+        <small>Вайбкодинг</small>
+      </a>
+      <nav class="site-nav" aria-label="Разделы">
+        <a href="#method">Подход</a>
+        <a href="#program">Программа</a>
+        <a href="#results">Результаты</a>
+        <a href="#format">Урок</a>
+        <a href="#tools">Инструменты</a>
+        <a href="#minicourses">Мини-курсы</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-card">
+        <div class="hero-grid">
+          <div>
+            <span class="eyebrow">Новый курс · 11–16 лет</span>
+            <h1>Вайбкодинг: придумываю — <em>нейросеть помогает</em> — программа работает</h1>
+            <p class="lead">Курс, на котором ребёнок описывает идею словами, собирает её вместе с нейросетью DeepSeek и разбирается, как устроен каждый кусок кода. На каждом уроке появляется готовый проект: сайт, игра, AI-помощник или веб-сервис.</p>
+            <div class="hero-actions">
+              <a class="btn" href="#program">Смотреть программу
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+              <a class="btn btn--quiet" href="#results">Образовательные результаты</a>
+            </div>
+            <dl class="stats">
+              <div class="stat"><dt>Уроков</dt><dd>36</dd></div>
+              <div class="stat"><dt>Модулей</dt><dd>6</dd></div>
+              <div class="stat"><dt>Длительность</dt><dd>60 мин</dd></div>
+              <div class="stat"><dt>Проектов</dt><dd>36</dd></div>
+            </dl>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <span class="chip-float chip-float--a">python · html · js</span>
+            <div class="chat">
+              <div class="chat-top"><div class="dots"><i></i><i></i><i></i></div><span>урок 28 · pygame</span></div>
+              <div class="msgs">
+                <div class="msg msg--me">Сделай игру: кот ловит падающую рыбу, за каждую +1 очко, промах — минус жизнь</div>
+                <div class="msg msg--ai">Готово! Разбил на 3 шага: игровой цикл, спрайты, счёт.
+                  <code>while running:
+    handle_events()
+    update(cat, fish)
+    draw(screen)</code></div>
+                <div class="game"><span class="score">SCORE 12 · <svg class="hrt" viewBox="0 0 24 22" aria-hidden="true"><path d="M12 21S1 14 1 7a5.5 5.5 0 0111-2 5.5 5.5 0 0111 2c0 7-11 14-11 14z" fill="#F2685A"/></svg><svg class="hrt" viewBox="0 0 24 22" aria-hidden="true"><path d="M12 21S1 14 1 7a5.5 5.5 0 0111-2 5.5 5.5 0 0111 2c0 7-11 14-11 14z" fill="#F2685A"/></svg><svg class="hrt" viewBox="0 0 24 22" aria-hidden="true"><path d="M12 21S1 14 1 7a5.5 5.5 0 0111-2 5.5 5.5 0 0111 2c0 7-11 14-11 14z" fill="#F2685A"/></svg></span><svg class="fish" viewBox="0 0 32 20" aria-hidden="true"><path d="M2 10c5-8 15-9 21-3l7-5v16l-7-5c-6 6-16 5-21-3z" fill="#45D2F2"/><path d="M14 4c2 2 2 10 0 12" stroke="#1D2560" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".45"/><circle cx="7.5" cy="8.5" r="1.6" fill="#1D2560"/></svg><svg class="fish" viewBox="0 0 32 20" aria-hidden="true"><path d="M2 10c5-8 15-9 21-3l7-5v16l-7-5c-6 6-16 5-21-3z" fill="#45D2F2"/><path d="M14 4c2 2 2 10 0 12" stroke="#1D2560" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".45"/><circle cx="7.5" cy="8.5" r="1.6" fill="#1D2560"/></svg><svg class="fish" viewBox="0 0 32 20" aria-hidden="true"><path d="M2 10c5-8 15-9 21-3l7-5v16l-7-5c-6 6-16 5-21-3z" fill="#45D2F2"/><path d="M14 4c2 2 2 10 0 12" stroke="#1D2560" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".45"/><circle cx="7.5" cy="8.5" r="1.6" fill="#1D2560"/></svg><svg class="cat" viewBox="0 0 48 44" aria-hidden="true"><path d="M6 4l11 9h14l11-9 2 20c0 11-9 18-20 18S4 35 4 24z" fill="#FFB547"/><path d="M9 9l6 5M39 9l-6 5" stroke="#E08A00" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="24" r="3" fill="#1D2560"/><circle cx="31" cy="24" r="3" fill="#1D2560"/><circle cx="18" cy="23" r="1" fill="#fff"/><circle cx="32" cy="23" r="1" fill="#fff"/><path d="M22 30l2 2 2-2" stroke="#1D2560" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 28h9M4 32l9-2M44 28h-9M44 32l-9-2" stroke="#E08A00" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              </div>
+            </div>
+            <span class="chip-float chip-float--b">проект запущен</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHOD -->
+  <section class="section" id="method" style="padding-top:20px">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow eyebrow--blue">Подход</span>
+        <h2>Цикл вайбкодинга, который ученик проходит на каждом уроке</h2>
+        <p class="lead">Нейросеть пишет код быстро, но решения принимает ученик. Мы учим не нажимать «сгенерировать», а ставить задачу, проверять результат и доводить проект до рабочего состояния.</p>
+      </div>
+      <ol class="loop reveal">
+        <li><span class="loop-num">1</span><h3>Идея</h3><p>Что хочу сделать и для кого. Рисуем схему или сценарий.</p></li>
+        <li><span class="loop-num">2</span><h3>Промпт</h3><p>Описываем задачу по формуле: роль, задача, контекст, формат, ограничения.</p></li>
+        <li><span class="loop-num">3</span><h3>Код</h3><p>Получаем код от DeepSeek и просим объяснить непонятные строки.</p></li>
+        <li><span class="loop-num">4</span><h3>Проверка</h3><p>Запускаем, тестируем, читаем ошибки, пишем баг-репорт нейросети.</p></li>
+        <li><span class="loop-num">5</span><h3>Своя фишка</h3><p>Добавляем идею, которой нет в задании, и показываем группе.</p></li>
+      </ol>
+      <div class="loop-note reveal">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></span>
+        <p><b>Правило курса:</b> код, который ученик не может объяснить, не считается сделанным. Поэтому в каждом уроке есть минута «объясни строчку» и ручная правка без нейросети.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LINES -->
+  <section class="section lines-section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Сквозные линии</span>
+        <h2>Четыре навыка растут через весь курс</h2>
+        <p class="lead">Модули меняют тему и проекты, а эти линии проходят через каждый урок и усложняются от модуля к модулю.</p>
+      </div>
+      <div class="lines reveal">
+        <article class="line-card">
+          <span class="line-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></span>
+          <h3>Промпт-инженерия</h3>
+          <p>От формулы промпта к system prompt, примерам (few-shot), JSON-ответам и техзаданию на целый продукт.</p>
+        </article>
+        <article class="line-card">
+          <span class="line-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></span>
+          <h3>Программирование</h3>
+          <p>Python — основа курса: условия, циклы, функции, файлы, API, базы данных. Для интерфейсов — HTML, CSS и JS.</p>
+        </article>
+        <article class="line-card">
+          <span class="line-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M8.5 11h5M11 8.5v5"/></svg></span>
+          <h3>Отладка и проверка</h3>
+          <p>Чтение ошибок, тестирование, проверка фактов за нейросетью, эксперименты со сравнением результатов.</p>
+        </article>
+        <article class="line-card">
+          <span class="line-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <h3>Безопасность и этика</h3>
+          <p>Ключи API, пароли, личные данные, дипфейки, честное использование AI в учёбе.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAM -->
+  <section class="section" id="program">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow eyebrow--dark">Программа · 36 уроков</span>
+        <h2>6 модулей: от первой страницы до своего AI-продукта</h2>
+        <p class="lead">Выберите модуль, чтобы увидеть его цель, образовательные результаты и итоговый проект. Нажмите на урок, чтобы открыть темы, результат и вау-момент.</p>
+      </div>
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div id="module"></div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="section lines-section" id="results">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Карта результатов</span>
+        <h2>Как растут навыки от модуля к модулю</h2>
+        <p class="lead">Уровень показывает, как ученик выходит из модуля: познакомился с навыком, применяет его с подсказками или делает сам.</p>
+      </div>
+      <div class="matrix-wrap reveal"><table class="matrix" id="matrix"></table></div>
+      <div class="legend">
+        <span><span class="lv"><i class="on"></i><i></i><i></i></span> знакомство</span>
+        <span><span class="lv"><i class="on"></i><i class="on"></i><i></i></span> применяет с опорой</span>
+        <span><span class="lv l3"><i class="on"></i><i class="on"></i><i class="on"></i></span> самостоятельно</span>
+      </div>
+      <div class="section-head reveal" style="margin-top:64px">
+        <h3 style="font-size:clamp(1.5rem,2.4vw,2rem)">Результат всего курса</h3>
+      </div>
+      <div class="final reveal">
+        <div><b>Портфолио из 36 проектов</b><p>Сайты, игры, AI-приложения и веб-сервисы, часть из них опубликована по ссылке.</p></div>
+        <div><b>Python на базовом уровне</b><p>Читает и объясняет код, пишет программы с условиями, циклами, функциями, файлами, API и базой данных.</p></div>
+        <div><b>Работа с нейросетями</b><p>Ставит задачу модели, встраивает LLM в программы через API, проверяет ответы.</p></div>
+        <div><b>Инженерное мышление</b><p>Делит задачу на шаги, тестирует, находит и исправляет ошибки.</p></div>
+        <div><b>Цифровая безопасность</b><p>Защищает ключи и пароли, понимает риски дипфейков и утечки личных данных.</p></div>
+        <div><b>Свой продукт и выступление</b><p>Проходит путь от идеи до MVP и защищает проект на демо-дне.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMAT -->
+  <section class="section" id="format">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow eyebrow--blue">Структура урока</span>
+        <h2>60 минут, в которых есть и знание, и результат</h2>
+        <p class="lead">Урок начинается с готового проекта, чтобы сразу было интересно, и заканчивается показом того, что сделал сам ученик.</p>
+      </div>
+      <div class="timeline reveal">
+        <div class="seg seg--dark" style="flex:5"><small>0–5</small><div><b>Вау-старт</b><p>Демо готового проекта</p></div></div>
+        <div class="seg" style="flex:15"><small>5–20</small><div><b>Новое знание</b><p>Теория на примерах и промпт, который пишем вместе с классом</p></div></div>
+        <div class="seg seg--cyan" style="flex:5"><small>20–25</small><div><b>Квиз</b><p>Проверка понимания</p></div></div>
+        <div class="seg" style="flex:5"><small>25–30</small><div><b>Перерыв</b><p>Разминка</p></div></div>
+        <div class="seg seg--accent" style="flex:22"><small>30–52</small><div><b>Практика вайбкодинга</b><p>Проект по шагам: промпт, код, проверка, ручная правка и своя фишка</p></div></div>
+        <div class="seg seg--dark" style="flex:8"><small>52–60</small><div><b>Показ и рефлексия</b><p>Демо, «объясни строчку», домашнее задание</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section class="section lines-section" id="tools">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Инструменты</span>
+        <h2>Всё работает из России без VPN</h2>
+        <p class="lead">Выбирали сервисы, которые открываются в РФ и подходят детям. Где нужен аккаунт или ключ, его выдаёт школа.</p>
+      </div>
+      <div class="tools reveal">
+        <article class="tool"><div class="tool-top"><span class="tool-logos"><span class="tool-logo" title="DeepSeek"><svg viewBox="0 0 32 32"><path d="M2.5 16.5c0-5.3 4.8-9.5 11.3-9.5 5 0 8.7 2.4 10.3 6 1.7-.1 3.3-1.1 4.4-2.8.7 3-.6 5.7-3 7.1-1.2 4.5-5.6 7.7-11.4 7.7-6.8 0-11.6-3.8-11.6-8.5z" fill="#4D6BFE"/><path d="M6.5 19.5c2.3 1.9 5 2.7 8.2 2.5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="18.5" cy="13.5" r="1.6" fill="#fff"/><path d="M11 7.5c-.3-2 .6-3.8 2.3-4.8.2 1.7-.3 3.3-1.5 4.6" fill="#4D6BFE"/></svg></span></span><span class="ru">без VPN</span></div><h3>DeepSeek</h3><p>Главный AI-напарник курса: чат для вайбкодинга и API для программ с нейросетью.</p><span class="where">Модули 1–6</span></article>
+        <article class="tool"><div class="tool-top"><span class="tool-logos"><span class="tool-logo" title="GigaChat"><svg viewBox="0 0 32 32"><defs><linearGradient id="gcG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#21A038"/><stop offset=".5" stop-color="#0FA8E0"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs><circle cx="16" cy="16" r="14" fill="url(#gcG)"/><path d="M16 6.5c.9 5 3.5 7.6 8.5 8.5v2c-5 .9-7.6 3.5-8.5 8.5h-.1c-.9-5-3.5-7.6-8.4-8.5v-2c4.9-.9 7.5-3.5 8.4-8.5z" fill="#fff"/></svg></span><span class="tool-logo" title="Kandinsky"><svg viewBox="0 0 32 32"><rect x="2" y="2" width="28" height="28" rx="8" fill="#1B1F3B"/><circle cx="11" cy="12" r="4.5" fill="#FF5C39"/><path d="M6 25 15.5 13l5 6 2.5-3L27 25z" fill="#FFC53D"/><rect x="19" y="6" width="7" height="7" rx="1.5" fill="#45D2F2" transform="rotate(15 22.5 9.5)"/></svg></span></span><span class="ru">без VPN</span></div><h3>GigaChat API и Kandinsky</h3><p>Вторая модель для сравнения ответов и генерация изображений по описанию.</p><span class="where">Модули 3, 5</span></article>
+        <article class="tool"><div class="tool-top"><span class="tool-logos"><span class="tool-logo" title="VS Code"><svg viewBox="0 0 32 32"><path d="M22.7 2.3 29 5.3v21.4l-6.3 3-12.3-11.4-5.3 4L2.8 21.2V10.8l2.3-1.1 5.3 4z" fill="#0065A9"/><path d="M22.7 2.3 29 5.3v21.4l-6.3 3z" fill="#1F9CF0"/><path d="M22.7 9.8 15 16l7.7 6.2z" fill="#fff"/><path d="M5.1 9.7 2.8 10.8v10.4l2.3 1.1L9.7 16z" fill="#007ACC"/></svg></span><span class="tool-logo" title="Python"><svg viewBox="0 0 24 24"><path d="M11.9 2c-5 0-4.7 2.2-4.7 2.2v2.3H12v.7H5.3S2 6.8 2 11.9s2.8 4.9 2.8 4.9h1.7v-2.4s-.1-2.8 2.8-2.8h4.7s2.7 0 2.7-2.6V4.6S17.1 2 11.9 2zM9.3 3.5a.9.9 0 1 1 0 1.8.9.9 0 0 1 0-1.8z" fill="#3776AB"/><path d="M12.1 22c5 0 4.7-2.2 4.7-2.2v-2.3H12v-.7h6.7s3.3.4 3.3-4.7-2.8-4.9-2.8-4.9h-1.7v2.4s.1 2.8-2.8 2.8H9.9s-2.7 0-2.7 2.6v4.4S6.9 22 12.1 22zm2.6-1.5a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8z" fill="#FFD43B"/></svg></span></span><span class="ru">бесплатно</span></div><h3>VS Code + Python</h3><p>Редактор кода и язык, на котором построен курс. Устанавливаем на первом уроке.</p><span class="where">Модули 1–6</span></article>
+        <article class="tool"><div class="tool-top"><span class="tool-logos"><span class="tool-logo" title="Flask"><svg viewBox="0 0 32 32" fill="none" stroke="#1B1F3B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3h8M13.5 3v8.5L5.5 25a2.5 2.5 0 0 0 2.2 3.8h16.6a2.5 2.5 0 0 0 2.2-3.8l-8-13.5V3"/><path d="M8.5 20h15"/><circle cx="14" cy="24" r="1.2" fill="#1B1F3B"/><circle cx="19" cy="22.5" r="1" fill="#1B1F3B"/></svg></span><span class="tool-logo" title="SQLite"><svg viewBox="0 0 32 32"><ellipse cx="14" cy="7.5" rx="10" ry="4" fill="#0F80CC"/><path d="M4 7.5v17c0 2.2 4.5 4 10 4s10-1.8 10-4v-17c0 2.2-4.5 4-10 4s-10-1.8-10-4z" fill="#003B57"/><path d="M4 13.5c0 2.2 4.5 4 10 4s10-1.8 10-4M4 19.5c0 2.2 4.5 4 10 4s10-1.8 10-4" stroke="#0F80CC" stroke-width="1.4" fill="none"/><path d="M29 3c-4 3-8 10-9.5 18l1.6.4C22.6 14 25.6 8 29 3z" fill="#97D9F6"/></svg></span><span class="tool-logo" title="Streamlit"><svg viewBox="0 0 32 32"><path d="M15.2 5.4 2.6 21.6c-.5.6 0 1.5.8 1.3l12.6-3.4z" fill="#FF4B4B"/><path d="M16.8 5.4l12.6 16.2c.5.6 0 1.5-.8 1.3L16 19.5z" fill="#7D353B"/><path d="M16 19.5 3.4 22.9 15.3 26.6c.5.1.9.1 1.4 0l11.9-3.7z" fill="#BD4043"/></svg></span></span><span class="ru">библиотеки</span></div><h3>Flask, SQLite, Streamlit</h3><p>Веб-приложения, базы данных и быстрые интерфейсы для AI-проектов.</p><span class="where">Модули 3, 4, 6</span></article>
+        <article class="tool"><div class="tool-top"><span class="tool-logos"><span class="tool-logo" title="Pygame"><svg viewBox="0 0 32 32"><rect x="2" y="8" width="28" height="17" rx="8.5" fill="#2E7D32"/><path d="M9.5 12.5v7M6 16h7" stroke="#FFD43B" stroke-width="2.4" stroke-linecap="round"/><circle cx="21" cy="14.2" r="1.9" fill="#FFD43B"/><circle cx="24.8" cy="18" r="1.9" fill="#fff"/></svg></span><span class="tool-logo" title="Pillow"><svg viewBox="0 0 32 32"><rect x="3" y="5" width="26" height="22" rx="5" fill="#E4F8FD" stroke="#0E9FDB" stroke-width="2"/><circle cx="11" cy="12" r="3" fill="#FFC53D"/><path d="M4 24l8-8 5 5 4-4 7 7" fill="none" stroke="#0E9FDB" stroke-width="2.2" stroke-linejoin="round"/></svg></span><span class="tool-logo" title="Vosk"><svg viewBox="0 0 32 32" fill="none" stroke-linecap="round"><rect x="11.5" y="3" width="9" height="16" rx="4.5" fill="#D9478F"/><path d="M6.5 14.5a9.5 9.5 0 0 0 19 0M16 24v5M11 29h10" stroke="#1B1F3B" stroke-width="2.2"/><path d="M2.5 12v5M29.5 12v5" stroke="#D9478F" stroke-width="2.2"/></svg></span></span><span class="ru">офлайн</span></div><h3>Pygame, Pillow, Vosk</h3><p>Игры, обработка фото и распознавание речи на компьютере, без сторонних серверов.</p><span class="where">Модуль 5</span></article>
+        <article class="tool"><div class="tool-top"><span class="tool-logos"><span class="tool-logo" title="GitHub"><svg viewBox="0 0 16 16"><path fill="#1B1F3B" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></span></span><span class="ru">без VPN</span></div><h3>GitHub Pages</h3><p>Публикация сайтов по ссылке: проект можно показать родителям и друзьям.</p><span class="where">Модули 1, 6</span></article>
+      </div>
+      <div class="notice reveal">
+        <div><b>Почему в курсе нет ботов для мессенджеров</b>С 2026 года Telegram в России замедляют и блокируют, а ботов в MAX могут публиковать только юрлица, ИП и самозанятые. Поэтому ученик делает AI-чат на собственном сайте: его можно показать кому угодно, и он не зависит от блокировок.</div>
+        <div><b>Ключи API выдаёт школа</b>DeepSeek API оплачивается только иностранной картой, а условия сервисов рассчитаны на взрослых. Поэтому ученик получает учебный ключ с лимитом и с первого урока учится хранить его в файле .env.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINI-COURSES -->
+  <section class="section" id="minicourses">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow eyebrow--blue">Бонус к курсу</span>
+        <h2>3 видео-мини-курса по нейросетям</h2>
+        <p class="lead">Идут в подарок к основному курсу или продаются отдельно. Каждый урок — видео на 15–20 минут. В ключевых уроках есть домашнее задание, не больше пяти на мини-курс. Ребёнок проходит их сам, в своём темпе.</p>
+      </div>
+      <div class="mc-picker reveal" role="tablist" id="mcPicker"></div>
+      <div id="mcPanel"></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="cta reveal">
+        <div>
+          <span class="eyebrow eyebrow--white">Итог курса</span>
+          <h2>36 уроков — 36 проектов и один собственный AI-продукт</h2>
+          <p>Ребёнок приходит с идеей «хочу свою игру» и выходит с портфолио, пониманием Python и навыком ставить задачи нейросети. В дополнение — 3 видео-мини-курса: теория ИИ, Алиса AI и нейросети для учёбы.</p>
+        </div>
+        <div class="big36">36</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div><strong>Котокод · Вайбкодинг</strong>Программа курса для детей 11–16 лет · версия 1.0</div>
+    <div>36 уроков по 60 минут · 3 видео-мини-курса</div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Наверх"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+
+<script>
+document.documentElement.classList.replace('no-js','js');
+const MODULES = [
+{
+  color:"#4F5BFF", short:"Сайты", title:"Сайты силой промпта", tech:["HTML","CSS","JavaScript","DeepSeek","GitHub Pages"],
+  goal:"Познакомить с вайбкодингом и циклом «идея → промпт → код → проверка», научить собирать и публиковать интерактивные веб-страницы вместе с нейросетью.",
+  results:[
+    "Объясняет, что такое вайбкодинг и за что отвечает человек, а за что нейросеть",
+    "Составляет промпт по формуле из 5 частей и улучшает результат итерациями",
+    "Различает роли HTML, CSS и JS и вносит правки в код вручную",
+    "Находит ошибку в консоли браузера и публикует сайт по ссылке"
+  ],
+  project:{name:"Сайт-портфолио с мини-игрой", text:"Личный сайт, на котором собраны все проекты модуля. Опубликован на GitHub Pages, ссылкой можно поделиться."},
+  lessons:[
+    {t:"Привет, вайбкодинг!", p:"Страница «Обо мне» с любимыми играми и мемами", topics:["Что такое вайбкодинг","Первый диалог с DeepSeek","HTML-файл → браузер","Установка VS Code"], res:["Создаёт HTML-страницу по своему промпту и открывает её в браузере","Объясняет, чем вайбкодинг отличается от копирования чужого кода"], wow:"Через 20 минут у тебя есть свой сайт"},
+    {t:"Промпт — это техзадание", p:"Анимированная карточка героя, как в игре", topics:["Формула: роль, задача, контекст, формат, ограничения","Слабый и сильный промпт","Итерации «то же, но…»"], res:["Составляет промпт из 5 частей","Улучшает результат за 3 итерации и сравнивает версии"], wow:"Карточка светится и переворачивается при наведении"},
+    {t:"Три кита сайта", p:"«Шар предсказаний» с кнопкой и анимацией", topics:["HTML — структура","CSS — внешний вид","JS — поведение","Подключение файлов"], res:["Определяет, в каком файле искать нужную правку","Меняет стили и тексты вручную, без нейросети"], wow:"Шар трясётся и выдаёт предсказание другу"},
+    {t:"Сайт с памятью", p:"Список дел с конфетти за выполненную задачу", topics:["Переменные и массивы","События click","localStorage","Просим AI объяснить код построчно"], res:["Объясняет, как данные сохраняются в браузере","Читает JS-код и описывает, что делает каждый блок"], wow:"Закрыл вкладку, открыл снова — задачи на месте"},
+    {t:"Ловим баги", p:"Кликер-игра «Котокоин» с прокачкой", topics:["Консоль DevTools","Баг-репорт: ожидал, получил, текст ошибки","Метод маленьких шагов"], res:["Находит ошибку в консоли и описывает её нейросети","Дробит большую задачу на проверяемые шаги"], wow:"Своя игра, в которую друзья кликают на перемене"},
+    {t:"Мой сайт в интернете", p:"Портфолио с проектами модуля на GitHub Pages", topics:["Структура папок проекта","Репозиторий и публикация","Рассказ о проекте"], res:["Публикует сайт и делится ссылкой","Рассказывает о проекте по схеме «идея — как сделал — что улучшу»"], wow:"Сайт открывается у родителей на телефоне"}
+  ]
+},
+{
+  color:"#7C5CFF", short:"Python", title:"Python: логика программ", tech:["Python","VS Code","JSON","requests","Open-Meteo"],
+  goal:"Освоить базовые конструкции Python через игры и полезные программы, научиться понимать и проверять код, который написала нейросеть.",
+  results:[
+    "Читает и объясняет код с переменными, условиями, циклами и функциями",
+    "Пишет программу по требованиям вместе с AI и проверяет её тестовыми вводами",
+    "Сохраняет и загружает данные в JSON, обрабатывает ошибки",
+    "Получает данные из открытого API и выводит нужные поля"
+  ],
+  project:{name:"Приложение «Мой помощник»", text:"Консольная программа с меню: прогноз погоды с советом, что надеть, дневник настроения и мини-игра."},
+  lessons:[
+    {t:"Первая программа на Python", p:"Генератор ников для игр", topics:["Установка Python","print, input, переменные","Строки и f-строки","Запуск из терминала"], res:["Запускает программу из терминала","Объясняет, что делает каждая строка"], wow:"Программа придумала тебе ник для игры"},
+    {t:"Выбор имеет значение", p:"Текстовый квест «Побег из подземелья» с 3 концовками", topics:["if / elif / else","Операторы сравнения","Блок-схема сюжета до промпта","Проверка всех веток"], res:["Строит ветвление по блок-схеме","Проверяет, что каждая ветка программы работает"], wow:"Друг проходит твой квест и попадает в ловушку"},
+    {t:"Циклы и случайность", p:"«Угадай число» с уровнями сложности и рекордом", topics:["while и for","Модуль random","Счётчики и флаги","Бесконечный цикл"], res:["Использует цикл для повторения действий","Находит и исправляет бесконечный цикл"], wow:"Побей рекорд группы"},
+    {t:"Функции: собираем как LEGO", p:"Пошаговая битва с боссом", topics:["Функции и параметры","Словари для характеристик героя","Рефакторинг с AI"], res:["Выносит повторяющийся код в функции","Просит AI провести рефакторинг и проверяет, что игра не сломалась"], wow:"Критический удар ×2 и выпадение лута"},
+    {t:"Программа, которая помнит", p:"Дневник настроения со статистикой", topics:["Чтение и запись файлов","Формат JSON","try / except"], res:["Сохраняет данные между запусками программы","Обрабатывает отсутствующий файл без падения программы"], wow:"Программа говорит, какой день недели у тебя самый весёлый"},
+    {t:"Данные из интернета", p:"Прогноз погоды с советом, что надеть", topics:["Что такое API","Библиотека requests","Open-Meteo без ключа","Разбор JSON-ответа"], res:["Получает данные по API и выводит нужные поля","Читает документацию API вместе с нейросетью"], wow:"Погода в любом городе мира одной командой"}
+  ]
+},
+{
+  color:"#0E9FDB", short:"AI в коде", title:"Нейросеть внутри программы", tech:["DeepSeek API","GigaChat API","Streamlit",".env"],
+  goal:"Понять, как устроены языковые модели, и научиться встраивать нейросеть в собственные программы через API.",
+  results:[
+    "Объясняет токены, контекст, температуру и почему модель ошибается",
+    "Подключает DeepSeek API и безопасно хранит ключ",
+    "Управляет ответами модели через system prompt, примеры и JSON-формат",
+    "Создаёт AI-приложение с памятью диалога и веб-интерфейсом"
+  ],
+  project:{name:"AI-репетитор", text:"Веб-приложение на Streamlit: объясняет тему простыми словами, задаёт вопросы и проверяет ответы, а не решает за ученика."},
+  lessons:[
+    {t:"Как думает нейросеть", p:"«AI-советчик» — первая программа с DeepSeek API", topics:["Токены и контекст","Температура","Галлюцинации","Ключ в .env, а не в коде"], res:["Отправляет запрос к API и выводит ответ","Объясняет, почему ключ нельзя публиковать"], wow:"Твоя программа разговаривает"},
+    {t:"Персонаж с характером", p:"Чат с котом-философом, который помнит разговор", topics:["System prompt","Роли сообщений","История диалога","Ограничение контекста"], res:["Задаёт модели роль и стиль ответов","Реализует память диалога через список сообщений"], wow:"Кот вспоминает, что ты говорил 5 сообщений назад"},
+    {t:"Ответ по форме", p:"Генератор викторин на любую тему с подсчётом очков", topics:["JSON-ответ модели","Разбор и проверка данных","Если модель ошиблась в формате"], res:["Получает структурированный ответ и превращает его в игру","Проверяет данные от модели перед использованием"], wow:"Викторина по твоему любимому аниме за 10 секунд"},
+    {t:"Учим на примерах", p:"Детектор настроения сообщений с эмодзи-шкалой", topics:["Zero-shot и few-shot","Классификация текста","Сравнение DeepSeek и GigaChat"], res:["Повышает точность ответов с помощью примеров","Проводит эксперимент на 10 фразах и делает вывод"], wow:"Битва нейросетей: кто точнее угадает эмоцию"},
+    {t:"Нейросеть с инструментами", p:"AI-помощник, который сам вызывает калькулятор и погоду", topics:["Function calling","Модель выбирает инструмент","Чат и агент: в чём разница"], res:["Описывает функцию так, чтобы модель могла её вызвать","Объясняет, чем агент отличается от чата"], wow:"Нейросеть перестаёт ошибаться в математике"},
+    {t:"AI-репетитор", p:"Веб-репетитор с режимами «объясни» и «проверь меня»", topics:["Интерфейс на Streamlit","Сборка приёмов модуля","Помощник, а не списывалка"], res:["Собирает веб-приложение с языковой моделью","Формулирует правила честного использования AI в учёбе"], wow:"Репетитор, который готовит к контрольной"}
+  ]
+},
+{
+  color:"#14A38F", short:"Веб-сервисы", title:"Веб-сервисы и базы данных", tech:["Flask","SQLite","SQL","fetch","Chart.js"],
+  goal:"Создать полноценное веб-приложение: сервер, база данных, аккаунты пользователей и AI-функции.",
+  results:[
+    "Объясняет схему «клиент — сервер — база данных»",
+    "Создаёт маршруты Flask и связывает их с фронтендом через fetch",
+    "Проектирует таблицы SQLite и пишет запросы SELECT, INSERT, WHERE",
+    "Реализует регистрацию с безопасным хранением паролей"
+  ],
+  project:{name:"«Стена класса»", text:"Мини-соцсеть для группы: аккаунты, посты, лайки и AI-модератор, который скрывает грубые комментарии."},
+  lessons:[
+    {t:"Свой сервер", p:"Сайт «Цитата дня» на Flask", topics:["Клиент и сервер","Запрос и ответ","Маршруты Flask","HTML-шаблоны"], res:["Запускает сервер и открывает свою страницу","Добавляет новый маршрут"], wow:"Твой компьютер стал сервером"},
+    {t:"Чат-бот на своём сайте", p:"AI-чат в портфолио из модуля 1", topics:["fetch из JS в Python","Ключ на сервере, не в браузере","Индикатор «печатает…»"], res:["Связывает фронтенд и бэкенд","Объясняет, почему ключ API хранится на сервере"], wow:"На твоём сайте появился свой AI-ассистент"},
+    {t:"Первая база данных", p:"Каталог любимых игр с поиском и фильтрами", topics:["Таблицы, строки, столбцы","SELECT, INSERT, WHERE","SQLite в Python"], res:["Создаёт таблицу и заполняет её данными","Пишет запрос с условием"], wow:"100 игр отфильтрованы за миллисекунду"},
+    {t:"Вопросы к данным словами", p:"Умный поиск: «покажи игры с рейтингом выше 8»", topics:["Text-to-SQL через нейросеть","Проверка сгенерированного запроса","SQL-инъекции"], res:["Превращает вопрос в SQL с помощью AI","Распознаёт опасный запрос и не выполняет его"], wow:"База данных понимает обычный русский язык"},
+    {t:"Вход по паролю", p:"Личный кабинет с профилем и аватаркой", topics:["Регистрация и сессии","Хеширование паролей","Приватность данных"], res:["Реализует вход и выход из аккаунта","Объясняет, почему пароли не хранят открытым текстом"], wow:"Взломай свой же сайт и закрой дыру"},
+    {t:"«Стена класса»", p:"Мини-соцсеть с постами, лайками и AI-модерацией", topics:["Связи таблиц","AI-модератор комментариев","Трекер активности на графиках","Чек-лист сценариев"], res:["Собирает приложение из нескольких частей","Тестирует его по чек-листу пользовательских сценариев"], wow:"Вся группа сидит в твоей соцсети"}
+  ]
+},
+{
+  color:"#D9478F", short:"Медиа и игры", title:"Картинки, голос и игры", tech:["Pillow","Kandinsky","Vosk","Pygame","Minimax"],
+  goal:"Научиться работать с изображениями, звуком и игровыми механиками, соединяя классические алгоритмы и генеративный AI.",
+  results:[
+    "Обрабатывает изображения программно: фильтры, надписи, пакетная обработка",
+    "Составляет визуальный промпт и генерирует изображения через API",
+    "Собирает цепочку «распознавание речи → модель → озвучка»",
+    "Создаёт игру на Pygame и объясняет, когда нужен алгоритм, а когда нейросеть"
+  ],
+  project:{name:"Визуальная новелла с AI", text:"Игра, в которой сюжет пишет нейросеть по заданным правилам, а сцены рисует Kandinsky."},
+  lessons:[
+    {t:"Фоторедактор кодом", p:"Генератор мемов с фильтрами", topics:["Пиксели и RGB","Pillow: фильтры и текст","Обработка целой папки"], res:["Применяет фильтры и надписи к изображению","Объясняет, как хранится картинка в компьютере"], wow:"50 мемов за одну секунду"},
+    {t:"AI-художник", p:"Генератор стикерпака по описанию", topics:["Визуальный промпт: объект, стиль, свет, ракурс","Генерация через GigaChat API","Авторство и дипфейки"], res:["Составляет промпт для генерации изображения","Объясняет риски дипфейков и как их распознать"], wow:"Стикерпак с твоим котом в стиле аниме"},
+    {t:"Программа говорит и слушает", p:"Голосовой помощник «Кот, какая погода?»", topics:["Синтез речи","Распознавание речи офлайн (Vosk)","Голос → LLM → голос"], res:["Собирает цепочку распознавания, модели и озвучки","Использует офлайн-модели без передачи голоса в интернет"], wow:"Компьютер отвечает голосом"},
+    {t:"Игровой цикл", p:"Аркада «Кот ловит рыбу» на Pygame", topics:["События, обновление, отрисовка","Спрайты и столкновения","Счёт и уровни"], res:["Объясняет устройство игрового цикла","Добавляет новую механику по своему промпту"], wow:"Настоящая игра в отдельном окне"},
+    {t:"Алгоритм против нейросети", p:"Крестики-нолики: Minimax против LLM", topics:["Алгоритм Minimax","Почему LLM ошибается в играх","Эксперимент на 10 партий"], res:["Объясняет, когда нужен алгоритм, а когда нейросеть","Делает вывод по результатам эксперимента"], wow:"Непобедимый противник, которого ты написал сам"},
+    {t:"AI-мастер игры", p:"Визуальная новелла: сюжет от AI, сцены от Kandinsky", topics:["Генерация сюжета по правилам","Состояние игры","Ограничения для модели"], res:["Проектирует систему правил для AI-персонажа","Собирает медиапроект из нескольких API"], wow:"Каждое прохождение — новая история"}
+  ]
+},
+{
+  color:"#E8A317", short:"Агенты и продукт", title:"AI-агенты и свой продукт", tech:["Агенты","BeautifulSoup","schedule","PRD","Демо-день"],
+  goal:"Освоить агентный подход и автоматизацию, пройти полный цикл создания собственного продукта от идеи до публичной защиты.",
+  results:[
+    "Объясняет устройство AI-агента и ставит ему ограничения",
+    "Автоматизирует рутинную задачу: сбор информации по расписанию",
+    "Формулирует техзадание (PRD) для нейросети и планирует MVP",
+    "Презентует продукт, отвечает на вопросы и оценивает свой прогресс"
+  ],
+  project:{name:"Собственный AI-продукт", text:"Проект на выбор ученика: игра, сервис, помощник или сайт с AI. Защищается на демо-дне перед группой и родителями."},
+  lessons:[
+    {t:"Как работает AI-агент", p:"Агент-планировщик домашних заданий", topics:["Цикл «план — действие — проверка»","Инструменты и память агента","Где агенту нельзя доверять"], res:["Описывает цикл работы агента","Ограничивает, какие действия агенту разрешены"], wow:"Агент сам составил расписание на неделю"},
+    {t:"Программа работает сама", p:"Сборщик новостей по интересам с AI-выжимкой", topics:["Парсинг с BeautifulSoup","Запуск по расписанию","robots.txt и правила сайтов"], res:["Автоматизирует сбор и сокращение информации","Проверяет, разрешает ли сайт парсинг"], wow:"Утром тебя ждёт личная газета"},
+    {t:"От идеи к плану", p:"Паспорт финального проекта и прототип экрана", topics:["Проблема — пользователь — решение","MVP: сейчас и потом","PRD как большой промпт"], res:["Формулирует идею через проблему пользователя","Делит продукт на задачи для спринтов"], wow:"Нейросеть оценивает твою идею как инвестор"},
+    {t:"Спринт 1: ядро", p:"Рабочая логика и AI-функции проекта", topics:["Работа по списку задач","Контроль версий","Советуемся с AI об архитектуре"], res:["Реализует ключевую функцию продукта","Ведёт журнал изменений"], wow:"Главная функция твоего продукта работает"},
+    {t:"Спринт 2: полировка", p:"Интерфейс, тестирование и публикация", topics:["Тестирование одногруппниками","Исправление багов по списку","Подготовка питча"], res:["Исправляет ошибки по обратной связи","Готовит презентацию на 3 минуты"], wow:"Первые пользователи и первые отзывы"},
+    {t:"Демо-день", p:"Публичная защита проекта", topics:["Питч: проблема, решение, демо, планы","Ответы на вопросы","Рефлексия пути"], res:["Презентует продукт аудитории","Оценивает свой прогресс за курс"], wow:"Аплодисменты и сертификат разработчика"}
+  ]
+}];
+
+const SKILLS = [
+  ["Промпт-инженерия",[2,2,3,3,3,3]],
+  ["HTML / CSS / JS",[2,0,1,3,1,2]],
+  ["Python",[0,2,2,3,3,3]],
+  ["Интеграция AI по API",[0,0,2,2,3,3]],
+  ["Данные: файлы, API, SQL",[1,2,2,3,2,3]],
+  ["Отладка и тестирование",[1,2,2,2,3,3]],
+  ["Безопасность и этика",[1,1,2,3,2,3]],
+  ["Проектная работа и питч",[1,1,2,2,2,3]]
+];
+
+const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>';
+const tabsEl=document.getElementById('tabs'), modEl=document.getElementById('module');
+let offset=0; MODULES.forEach(m=>{m.start=offset+1; offset+=m.lessons.length;});
+
+tabsEl.innerHTML=MODULES.map((m,i)=>`<button class="tab" role="tab" style="--mc:${m.color}" data-i="${i}" aria-selected="${i===0}">
+  <span class="tn">${i+1}</span><span><small>Уроки ${m.start}–${m.start+m.lessons.length-1}</small>${m.short}</span></button>`).join('');
+
+function render(i){
+  const m=MODULES[i];
+  modEl.innerHTML=`<div class="module" style="--mc:${m.color}">
+    <div class="module-top">
+      <div>
+        <span class="m-badge"><b>${i+1}</b>Модуль · ${m.lessons.length} уроков</span>
+        <h3>${m.title}</h3>
+        <div class="m-meta">${m.tech.map(t=>`<span class="pill">${t}</span>`).join('')}</div>
+        <span class="label">Цель модуля</span>
+        <p class="m-goal">${m.goal}</p>
+      </div>
+      <div class="m-side">
+        <div>
+          <span class="label" style="margin-top:0">Образовательный результат</span>
+          <ul class="results">${m.results.map(r=>`<li><span class="ck">${CHECK}</span><span>${r}</span></li>`).join('')}</ul>
+        </div>
+        <div class="m-project">
+          <span class="label">Проект модуля</span>
+          <h4>${m.project.name}</h4>
+          <p>${m.project.text}</p>
+        </div>
+      </div>
+    </div>
+    <div class="lessons-bar"><h4>Уроки модуля</h4><button class="btn btn--quiet" id="toggleAll" style="min-height:40px">Раскрыть все</button></div>
+    <div class="lessons">${m.lessons.map((l,j)=>`<details class="lesson">
+      <summary><span class="l-num">${m.start+j}</span><span><span class="l-title">${l.t}</span><span class="l-proj">Проект: ${l.p}</span></span><span class="plus" aria-hidden="true"></span></summary>
+      <div class="l-body">
+        <div><span class="label">Ключевые темы</span><ul class="topics">${l.topics.map(t=>`<li>${t}</li>`).join('')}</ul></div>
+        <div><span class="label">Ученик сможет</span><ul class="outcome">${l.res.map(r=>`<li>${r}</li>`).join('')}</ul></div>
+        <div class="wow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 2 4 13.5h6.5L9.5 22 20 9.5h-6.8z" fill="#E8A317"/></svg>${l.wow}</div>
+      </div></details>`).join('')}</div>
+  </div>`;
+  const btn=document.getElementById('toggleAll');
+  btn.onclick=()=>{const ds=[...modEl.querySelectorAll('details')];const open=!ds.every(d=>d.open);ds.forEach(d=>d.open=open);btn.textContent=open?'Свернуть все':'Раскрыть все';};
+}
+tabsEl.addEventListener('click',e=>{
+  const b=e.target.closest('.tab'); if(!b) return;
+  tabsEl.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===b));
+  render(+b.dataset.i);
+});
+render(0);
+
+const MINI = [
+{
+  color:"#7C5CFF", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3A3 3 0 0 0 6.6 5.3 3 3 0 0 0 4 8.2a3 3 0 0 0 .6 4.8A3.2 3.2 0 0 0 6.5 18a3 3 0 0 0 3 3 2.5 2.5 0 0 0 2.5-2.5v-13A2.5 2.5 0 0 0 9.5 3z"/><path d="M14.5 3a3 3 0 0 1 2.9 2.3A3 3 0 0 1 20 8.2a3 3 0 0 1-.6 4.8 3.2 3.2 0 0 1-1.9 5 3 3 0 0 1-3 3 2.5 2.5 0 0 1-2.5-2.5"/><circle cx="16" cy="10" r="1.2" fill="#fff"/><circle cx="8" cy="14" r="1.2" fill="#fff"/><path d="M12 10h2.8M9.2 14H12"/></svg>', title:"Как устроен ИИ", sub:"Теория ИИ и нейросетей",
+  desc:"Простыми словами о том, как машины учатся, видят, говорят и рисуют и почему им нельзя верить на слово.",
+  tags:["10 уроков","без программирования","11–16 лет"],
+  goal:"Сформировать у ребёнка понятную картину того, как работают ИИ и нейросети, чтобы он пользовался ими осознанно: понимал возможности и ограничения и не боялся технологии.",
+  results:["Объясняет своими словами, как обучается нейросеть и откуда она берёт ответы","Различает типы нейросетей: распознающие, языковые, генеративные","Называет причины ошибок ИИ и проверяет подозрительные ответы","Узнаёт признаки дипфейков и защищает свои личные данные"],
+  note:"Лучше всего проходить до основного курса или в первом модуле: видео дают теорию, на которую опираются уроки 13–16 о языковых моделях.",
+  lessons:[
+    {t:"ИИ вокруг нас",d:"Рекомендации в видео, камера телефона, навигатор, голосовые помощники: где ИИ уже работает каждый день."},
+    {t:"От Тьюринга до чат-ботов",d:"Короткая история ИИ: тест Тьюринга, компьютер обыграл чемпиона по шахматам, как появились ChatGPT, DeepSeek и Алиса AI."},
+    {t:"Как учится машина",d:"Данные, примеры и правильные ответы. Обучение с учителем на примере «кот или собака»."},
+    {t:"Нейросеть простыми словами",d:"Нейрон, веса и слои без формул: нейросеть как команда голосующих экспертов."},
+    {t:"Как нейросеть видит",d:"Пиксели, признаки, распознавание лиц и объектов. Компьютерное зрение в жизни."},
+    {t:"Как нейросеть говорит",d:"Языковые модели угадывают следующее слово. Токены, контекст и почему модель не «знает», а продолжает текст.",task:"Задай нейросети один и тот же вопрос 3 раза и сравни ответы. Объясни, почему они отличаются"},
+    {t:"Как нейросеть рисует",d:"Генерация картинок: из шума в изображение. Почему у персонажей бывает шесть пальцев.",task:"Сгенерируй картинку и найди на ней 3 признака того, что её нарисовал ИИ"},
+    {t:"Почему ИИ ошибается",d:"Галлюцинации, устаревшие данные и предвзятость. Правило трёх проверок.",task:"Спроси нейросеть о своём городе или школе и проверь 3 факта по другим источникам"},
+    {t:"Дипфейки и безопасность",d:"Поддельные фото, видео и голоса, мошенники и личные данные: что нельзя рассказывать нейросети.",task:"Придумай с семьёй кодовое слово на случай звонка «от родственника» с просьбой о деньгах"},
+    {t:"ИИ, этика и профессии будущего",d:"Кто автор картинки от нейросети, кто отвечает за ошибку ИИ и какие навыки понадобятся в профессиях будущего."}
+  ]
+},
+{
+  color:"#E0356B", icon:'<svg viewBox="0 0 52 52"><defs><radialGradient id="alG" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#B9A4FF"/><stop offset=".45" stop-color="#7B4DFF"/><stop offset=".8" stop-color="#4A2BD6"/><stop offset="1" stop-color="#2A1A8F"/></radialGradient><linearGradient id="alR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF7AD9"/><stop offset="1" stop-color="#6EE7FF"/></linearGradient></defs><circle cx="26" cy="26" r="24" fill="url(#alG)"/><circle cx="26" cy="26" r="13" fill="none" stroke="url(#alR)" stroke-width="4.5"/><circle cx="26" cy="26" r="5" fill="#fff"/></svg>', bare:true, title:"Алиса AI: мой умный помощник", sub:"Нейросеть Яндекса",
+  desc:"Практика с Алисой AI: вопросы и рассуждения, домашка по фото, картинки, фоторедактор, оживление рисунков и AI-персонажи.",
+  tags:["12 уроков","бесплатно в РФ","приложение и Браузер"],
+  goal:"Научить ребёнка уверенно и безопасно пользоваться Алисой AI для учёбы, творчества и повседневных задач: ставить запросы, выбирать подходящий режим и проверять результат.",
+  results:["Формулирует запросы к Алисе AI и уточняет ответ в диалоге","Выбирает инструмент под задачу: рассуждения, поиск, пересказ, фото, рисование","Создаёт и редактирует изображения, оживляет свои рисунки","Проверяет источники ответа и соблюдает правила безопасности аккаунта"],
+  note:"План сверен с возможностями Алисы AI на сентябрь 2026 года. Функции обновляются каждый месяц, часть из них входит в подписку Алиса Про — в видео это стоит помечать. Детям до 14 лет нужен детский аккаунт Яндекс ID, которым управляют родители.",
+  lessons:[
+    {t:"Знакомство с Алисой AI",d:"Где живёт Алиса AI: приложение, Яндекс Браузер, Станция. Детский аккаунт, безопасность, что бесплатно и что в Алисе Про.",task:"Вместе с родителями настрой детский аккаунт и фильтрацию контента"},
+    {t:"Как правильно спрашивать",d:"Голос и текст, уточняющие вопросы, формула хорошего запроса: кто ты, что нужно, в каком виде."},
+    {t:"Режим рассуждений",d:"Сложные задачи по шагам: смотрим ход мыслей Алисы и ищем, где она могла ошибиться."},
+    {t:"Поиск с источниками",d:"Ответы со ссылками, проверка источников и агент «Исследовать» для доклада или проекта.",task:"Открой источники из ответа Алисы и проверь, подтверждают ли они 3 факта"},
+    {t:"Пересказ статей и видео",d:"Краткий пересказ длинной статьи или видео в Яндекс Браузере. Как не потерять главное."},
+    {t:"Домашка по фото — с объяснением",d:"Фотографируем задание и просим объяснить решение, а не выдать готовый ответ. Задачи по геометрии.",task:"Возьми задачу из текущей домашки: попроси объяснение, затем реши похожую без Алисы"},
+    {t:"Фото и документы",d:"Алиса AI читает фото конспекта, таблицы и документы. Задаём вопросы по загруженному материалу."},
+    {t:"Рисуем с Алисой",d:"Картинки по описанию: объект, стиль, цвет, настроение. Открытки и постеры с надписями на русском."},
+    {t:"Фоторедактор с AI",d:"Убираем фон и лишние объекты, раскрашиваем старые фото, собираем коллаж из нескольких снимков."},
+    {t:"Оживляем рисунки",d:"«Оживить фото» превращает рисунок или снимок в короткий видеоролик."},
+    {t:"AI-персонажи",d:"Общение с готовыми персонажами и создание своего: собеседник-историк, тренер по английскому, мастер загадок.",task:"Создай персонажа-помощника по предмету, который даётся тебе сложнее всего"},
+    {t:"Алиса в моём дне",d:"Напоминания, план дня, режим «Посмотреть» с камерой. Итог: собираем личный набор приёмов.",task:"Итоговый проект: подготовь реальное событие — план, приглашение и открытку"}
+  ]
+},
+{
+  color:"#14A38F", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8.5 12 4l10 4.5-10 4.5z"/><path d="M6 10.3V15c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.7"/><path d="M22 8.5V14"/><circle cx="22" cy="15.3" r=".9" fill="#fff"/></svg>', title:"Нейросети для учёбы", sub:"Учиться быстрее и честно",
+  desc:"Как использовать Алису AI, GigaChat и DeepSeek, чтобы понимать темы, готовиться к контрольным и не превращать ИИ в списывалку.",
+  tags:["12 уроков","Алиса AI · GigaChat · DeepSeek","5–11 класс"],
+  goal:"Научить ребёнка использовать нейросети как репетитора и тренера: разбираться в темах, тренировать память, готовиться к проверочным и экзаменам, сохраняя самостоятельность и академическую честность.",
+  results:["Отличает честную помощь ИИ от списывания и следует правилам школы","Получает объяснение темы на своём уровне и проверяет понимание вопросами","Делает конспекты, карточки и тесты для самопроверки с помощью нейросети","Составляет личный план подготовки к контрольной или ОГЭ"],
+  note:"Все инструменты мини-курса работают в России без VPN. Правило, которое повторяется в каждом видео: нейросеть объясняет и проверяет, а думает и пишет ученик.",
+  lessons:[
+    {t:"Помощник, а не списывалка",d:"Где проходит граница между помощью и списыванием. Правила школы и почему учитель всё равно заметит."},
+    {t:"Объясни как другу",d:"Просим объяснить сложную тему простыми словами, через аналогии и на разном уровне сложности."},
+    {t:"AI-репетитор задаёт вопросы",d:"Метод Сократа: нейросеть не даёт ответ, а наводящими вопросами помогает дойти до него самому.",task:"Пройди с репетитором 10 вопросов по теме ближайшей контрольной и выпиши, где ошибся"},
+    {t:"Конспект за 5 минут",d:"Тезисы параграфа, пересказ видеоурока, схема-карта темы. Проверяем, ничего ли не потерялось."},
+    {t:"Карточки и тесты",d:"Флеш-карточки, тесты с вариантами ответа, интервальное повторение для запоминания.",task:"Сделай 20 карточек по текущей теме и повтори их через 1, 3 и 7 дней"},
+    {t:"Математика и физика по шагам",d:"Разбор решения по шагам, проверка своего решения, где нейросети ошибаются в вычислениях."},
+    {t:"Иностранный язык",d:"Разговорный партнёр, проверка грамматики с объяснением ошибок, словарь по теме."},
+    {t:"Сочинение: пишу сам",d:"План, аргументы и отзыв на свой текст. Нейросеть — редактор, а не автор.",task:"Напиши абзац для настоящего школьного задания, получи отзыв по 3 критериям и исправь сам"},
+    {t:"Проект и доклад",d:"Поиск источников, проверка фактов, ссылки на литературу и агент «Исследовать»."},
+    {t:"Презентация за вечер",d:"Структура слайдов, картинки от нейросети, репетиция выступления с обратной связью."},
+    {t:"Готовимся к контрольной и ОГЭ",d:"Диагностика пробелов, пробные задания «ещё 5 таких же», план подготовки по дням.",task:"Составь план подготовки к ближайшей контрольной по дням"},
+    {t:"Мой учебный AI-набор",d:"Личная шпаргалка промптов, режим дня, фокус и отдых от экрана. Итог мини-курса.",task:"Собери шпаргалку из 10 своих лучших промптов для учёбы"}
+  ]
+}];
+
+const mcPicker=document.getElementById('mcPicker'), mcPanel=document.getElementById('mcPanel');
+mcPicker.innerHTML=MINI.map((c,i)=>`<button class="mc-card" role="tab" style="--mc:${c.color}" data-i="${i}" aria-selected="${i===0}">
+  <span class="mc-ic${c.bare?' mc-ic--bare':''}" aria-hidden="true">${c.icon}</span><small>Мини-курс ${i+1} · ${c.sub}</small><b>${c.title}</b><span class="desc">${c.desc}</span>
+  <span class="mc-tags">${c.tags.map(t=>`<span class="pill">${t}</span>`).join('')}</span></button>`).join('');
+function renderMini(i){
+  const c=MINI[i];
+  mcPanel.innerHTML=`<div class="mc-panel" style="--mc:${c.color}">
+    <div class="mc-top">
+      <div><span class="label" style="margin-top:0">Мини-курс ${i+1} · ${c.lessons.length} видео по 15–20 минут</span><h3>${c.title}</h3>
+        <span class="label">Цель</span><p>${c.goal}</p><div class="mc-note">${c.note}</div></div>
+      <div><span class="label" style="margin-top:0">Образовательный результат</span>
+        <ul class="results">${c.results.map(r=>`<li><span class="ck">${CHECK}</span><span>${r}</span></li>`).join('')}</ul></div>
+    </div>
+    <ol class="mc-lessons">${c.lessons.map((l,j)=>`<li class="mc-lesson"><span class="mc-n">${j+1}</span><div>
+      <h4>${l.t}</h4><p>${l.d}</p><span class="mc-play">видео 15–20 мин</span>
+      ${l.task?`<div class="mc-task"><svg viewBox="0 0 24 24" fill="none" stroke="#B87A00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg><span><b>Домашнее задание:</b> ${l.task}</span></div>`:''}</div></li>`).join('')}</ol>
+  </div>`;
+}
+mcPicker.addEventListener('click',e=>{
+  const b=e.target.closest('.mc-card'); if(!b) return;
+  mcPicker.querySelectorAll('.mc-card').forEach(t=>t.setAttribute('aria-selected',t===b));
+  renderMini(+b.dataset.i);
+});
+renderMini(0);
+
+const lv=n=>`<span class="lv ${n===3?'l3':''}">${[1,2,3].map(k=>`<i class="${k<=n?'on':''}"></i>`).join('')}</span>`;
+document.getElementById('matrix').innerHTML=`<thead><tr><th>Навык</th>${MODULES.map((m,i)=>`<th>М${i+1}<br>${m.short}</th>`).join('')}</tr></thead>
+<tbody>${SKILLS.map(([n,v])=>`<tr><td>${n}</td>${v.map(x=>`<td>${x?lv(x):'<span style="color:#C5C8D8">—</span>'}</td>`).join('')}</tr>`).join('')}</tbody>`;
+
+const prog=document.getElementById('progress'), toTopBtn=document.getElementById('toTop');
+const links=[...document.querySelectorAll('.site-nav a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+addEventListener('scroll',()=>{
+  const h=document.documentElement; prog.style.transform=`scaleX(${h.scrollTop/(h.scrollHeight-h.clientHeight)})`;
+  toTopBtn.classList.toggle('on',h.scrollTop>700);
+  let cur=-1; secs.forEach((s,i)=>{if(s.getBoundingClientRect().top<140)cur=i;});
+  links.forEach((a,i)=>a.classList.toggle('is-active',i===cur));
+},{passive:true});
+toTopBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+if(!('IntersectionObserver' in window)){document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));}
+else{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));}
+</script>
+</body>
+</html>
